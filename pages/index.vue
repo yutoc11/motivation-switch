@@ -18,9 +18,12 @@
       v-stepper.pb-6(v-model="e6" vertical)
         v-stepper-step.py-2(:complete="e6 > 2" step="2") どれが好み？
         v-stepper-content.py-0.mx-0.px-0(step="2")
-          v-card(
-            color="grey lighten-1" height="200px"
-            )
+          v-layout.mx-0.my-5.py-3.px-3(row wrap justify-space-around)
+            .fuwafuwa_1.btn-circle しゅうぞう
+            .fuwafuwa_2.btn-circle いじん
+            .fuwafuwa_3.btn-circle ゆるゆる
+            .fuwafuwa_4.btn-circle いやし
+            .fuwafuwa_5.btn-circle めんたりすと
           v-layout.my-3.pb-3(justify-center)
             v-btn(
               text
@@ -155,6 +158,77 @@ export default {
   font-weight: bold;
   width: 600px;
   height: 315px
+}
+
+.fuwafuwa_1 {
+  animation: fuwafuwa_1 2.5s infinite;
+}
+
+.fuwafuwa_2{
+  animation: fuwafuwa_2 4s infinite;
+}
+
+.fuwafuwa_3{
+  animation: fuwafuwa_3 5s infinite;
+}
+
+.fuwafuwa_4{
+  animation: fuwafuwa_4 3.5s infinite;
+}
+
+.fuwafuwa_5{
+  animation: fuwafuwa_5 4.5s infinite;
+}
+
+.btn-circle {
+  display: inline-block;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  border-radius: 50%;
+  text-align: center;
+  overflow: hidden;
+  background-image: linear-gradient(45deg, #709dff 0%, #91fdb7 100%);
+  transition: .4s;
+}
+
+.btn-circle-fishy:hover {
+  cursor: pointer;
+}
+
+@keyframes fuwafuwa_1 {
+  0% { transform:translateX(0px); }
+  50% { transform:translateX(5px) translateY(5px); }
+  100% { transform:translateX(  0px); }
+}
+
+@keyframes fuwafuwa_2 {
+  0% { transform:translateY(0px); }
+  50% { transform:translateY(5px); }
+  100% { transform:translateY(  0px); }
+}
+
+@keyframes fuwafuwa_3 {
+  0% { transform:translateY(0px); }
+  50% { transform:translateY(5px) translateX(-5px); }
+  100% { transform:translateY(  0px); }
+}
+
+@keyframes fuwafuwa_4 {
+  0% { transform:translateY(0px); }
+  50% { transform:translateY(-2px) translateX(-5px); }
+  100% { transform:translateY(  0px); }
+}
+
+@keyframes fuwafuwa_5 {
+  0% { transform:translateY(0px); }
+  50% { transform:translateY(-5px) translateX(5px); }
+  100% { transform:translateY(  0px); }
 }
 
 @media screen and (max-width: 700px) {
