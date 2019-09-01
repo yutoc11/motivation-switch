@@ -58,19 +58,19 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
-      /**
-       * vue-loader に オプションを渡す
-       */
-      const vueLoader = config.module.rules.find(rule => rule.loader === 'vue-loader');
-      const { options: {loaders} } = vueLoader || { options: {} }
-      if (loaders) {
-        for (const loader of Object.values(loaders)) {
-          changeLoaderOptions(Array.isArray(loader) ? loader : [loader])
-        }
-      }
-      config.module.rules.forEach(rule => changeLoaderOptions(rule.use))
-    }
+    // extend (config, ctx) {
+    //   /**
+    //    * vue-loader に オプションを渡す
+    //    */
+    //   const vueLoader = config.module.rules.find(rule => rule.loader === 'vue-loader');
+    //   const { options: {loaders} } = vueLoader || { options: {} }
+    //   if (loaders) {
+    //     for (const loader of Object.values(loaders)) {
+    //       changeLoaderOptions(Array.isArray(loader) ? loader : [loader])
+    //     }
+    //   }
+    //   config.module.rules.forEach(rule => changeLoaderOptions(rule.use))
+    // }
   }
 }
 
