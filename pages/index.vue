@@ -32,7 +32,7 @@
             .fuwafuwa_2.btn-circle いじん
             .fuwafuwa_3.btn-circle ゆるゆる
             .fuwafuwa_4.btn-circle いやし
-            .fuwafuwa_5.btn-circle めんたりすと
+            .fuwafuwa_5.btn-circle めんたる
           v-layout.my-3.pb-3(justify-center)
             v-btn(
               text
@@ -272,10 +272,10 @@ export default {
   }
   
   .btn-circle{
-    width: 80px;
-    height: 80px;
-    line-height: 80px;
-    font-size: 14px;font-size: 14px;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    font-size: 14px;
   }
   
   .rating-wrapper::before{
@@ -286,6 +286,15 @@ export default {
     right: 30px;
   }
   
+}
+
+@media screen and (max-width: 348px) {
+  .btn-circle{
+    width: 75px;
+    height: 75px;
+    line-height: 75px;
+    font-size: 12px;
+  }
 }
   
 </style>
