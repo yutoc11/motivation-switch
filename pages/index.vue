@@ -2,11 +2,20 @@
   section.section
     v-container
       v-stepper.pb-6(v-model="e6" vertical)
-        v-stepper-step.py-2(:complete="e6 > 1" step="1") 正直、今の気分は？
-        v-stepper-content.py-0.mx-0.px-0(step="1")
-          v-card(
-            color="grey lighten-1" height="200px"
-            )
+        v-stepper-step.py-2(:complete="e6 > 1" step="1") 今のモチベーションは？
+        v-stepper-content.rating-section.py-0.mx-0.px-0(step="1")
+          v-layout.rating-wrapper.py-4(justify-center)
+            v-rating(
+              v-model="rating"
+              length=5
+              empty-icon="mdi-heart-outline"
+              full-icon="mdi-heart"
+              hover=true
+              size=50
+              dense=true
+              color="red lighten-3"
+              background-color="red lighten-3"
+              )
           v-layout.my-3.pb-3(justify-center)
             v-btn.white--text.font-weight-bold(
               color="teal lighten-2"
@@ -18,7 +27,7 @@
       v-stepper.pb-6(v-model="e6" vertical)
         v-stepper-step.py-2(:complete="e6 > 2" step="2") どれが好み？
         v-stepper-content.py-0.mx-0.px-0(step="2")
-          v-layout.mx-0.my-5.py-3.px-3(row wrap justify-space-around)
+          v-layout.mx-0.my-2.py-4.px-0(row wrap justify-space-around)
             .fuwafuwa_1.btn-circle しゅうぞう
             .fuwafuwa_2.btn-circle いじん
             .fuwafuwa_3.btn-circle ゆるゆる
@@ -186,10 +195,10 @@ export default {
   text-decoration: none;
   color: #fff;
   font-weight: bold;
-  font-size: 14px;
-  width: 100px;
-  height: 100px;
-  line-height: 100px;
+  font-size: 18px;
+  width: 150px;
+  height: 150px;
+  line-height: 150px;
   border-radius: 50%;
   text-align: center;
   overflow: hidden;
@@ -197,8 +206,32 @@ export default {
   transition: .4s;
 }
 
-.btn-circle-fishy:hover {
+.btn-circle:hover {
   cursor: pointer;
+}
+
+.rating-section{
+  position:relative;
+}
+
+.rating-wrapper::before{
+  content:'◀︎やる気皆無';
+  display: block;
+  font-size: 0.6rem;
+  color: #999;
+  position: absolute;
+  top:7px;
+  left:20%;
+}
+
+.rating-wrapper::after{
+  content:'やる気MAX！▶︎';
+  display: block;
+  font-size: 0.6rem;
+  color: #999;
+  position: absolute;
+  top:7px;
+  right:20%;
 }
 
 @keyframes fuwafuwa_1 {
@@ -237,6 +270,22 @@ export default {
     height: 42vw;
     line-height: 42vw;
   }
+  
+  .btn-circle{
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    font-size: 14px;font-size: 14px;
+  }
+  
+  .rating-wrapper::before{
+    left:30px;
+  }
+  
+  .rating-wrapper::after{
+    right: 30px;
+  }
+  
 }
   
 </style>
