@@ -58,7 +58,7 @@
 </template>
 
 <script>
-//import firebase from '@/plugins/firebase'
+import firebase from '@/plugins/firebase'
 import store from '~/store/index.js'
 import { mapActions, mapState, mapGetters } from 'vuex'
 

@@ -42,14 +42,14 @@ export default {
   */
   modules: [
     '@nuxtjs/pwa',
-    '@nuxtjs/axios',    
+    '@nuxtjs/axios',
   ],
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
   */
   vuetify: {
-    customVariables: ['~/assets/variable.scss'],
+
   },
   /*
   ** Build configuration
@@ -74,34 +74,34 @@ export default {
   }
 }
 
-/**
- * loader の名前一致でオプションをセットする
- */
-function changeLoaderOptions(loaders) {
-  if (loaders) {
-    for (const loader of loaders) {
-      let options;
-      switch (loader.loader) {
-        case 'sass-loader':
-          options = {
-            includePaths: [
-              path.resolve(__dirname, './assets/sass/foundation/variable/'),
-              path.resolve(__dirname, './assets/sass/foundation/mixin/')
-            ],
-            data: '@import "_variable";\n@import "_mixin";'
-          };
-          break
-// 他の loader を追加できる
-//        case 'stylus-loader':
-//          options = {
-//            includePaths: [path.resolve(__dirname, './assets/sass/')],
-//            import: ['_import']
-//          }
-//          break
-      }
-      if (options) {
-        Object.assign(loader.options, options)
-      }
-    }
-  }
-}
+// /**
+//  * loader の名前一致でオプションをセットする
+//  */
+// function changeLoaderOptions(loaders) {
+//   if (loaders) {
+//     for (const loader of loaders) {
+//       let options;
+//       switch (loader.loader) {
+//         case 'sass-loader':
+//           options = {
+//             includePaths: [
+//               path.resolve(__dirname, './assets/sass/foundation/variable/'),
+//               path.resolve(__dirname, './assets/sass/foundation/mixin/')
+//             ],
+//             data: '@import "_variable";\n@import "_mixin";'
+//           };
+//           break
+// // 他の loader を追加できる
+// //        case 'stylus-loader':
+// //          options = {
+// //            includePaths: [path.resolve(__dirname, './assets/sass/')],
+// //            import: ['_import']
+// //          }
+// //          break
+//       }
+//       if (options) {
+//         Object.assign(loader.options, options)
+//       }
+//     }
+//   }
+// }
