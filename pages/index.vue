@@ -75,8 +75,9 @@
         v-layout.py-2(justify-center)
           .famous-quotes-result ここに結果が入ります
         v-container
-          p {{famousQuotesShuzo[0].motivation_level}}
-          p {{famousQuotesShuzo[0].famous_1}}
+          .sample_result
+            p {{rating}}
+            p {{famousQuotesResult}}
         v-layout.py-2(justify-center)
           v-btn.white--text.font-weight-bold(
             @click="twitterShare"
@@ -87,7 +88,7 @@
           v-btn(rounded @click="retry") もう一度
           v-btn.ml-5(rounded @click="imagegDownload") 画像をDL
 
-    v-layout.my-3.pb-3(justify-center)
+    //-v-layout.my-3.pb-3(justify-center)
       v-btn(
         text
         @click="testJSON"
@@ -102,6 +103,10 @@ import firebase from '@/plugins/firebase'
 import store from '~/store/index.js'
 import { mapActions, mapState, mapGetters } from 'vuex'
 import famousQuotesShuzo from '~/static/famous_quotes_shuzo.json'
+import famousQuotesIzin from '~/static/famous_quotes_izin.json'
+import famousQuotesYuru from '~/static/famous_quotes_yuru.json'
+import famousQuotesIyashi from '~/static/famous_quotes_iyashi.json'
+import famousQuotesMental from '~/static/famous_quotes_mental.json'
 
 export default {
 
@@ -128,6 +133,9 @@ export default {
       isActiveType03 : false,
       isActiveType04 : false,
       isActiveType05 : false,
+      famous_quotes : '',
+      famousQuotesResult: '',
+      famousQuotesList : '',
     };
   },
 
@@ -139,7 +147,11 @@ export default {
 
   asyncData ({ params }) {
     return {
-      famousQuotesShuzo
+      famousQuotesShuzo,
+      famousQuotesIzin,
+      famousQuotesYuru,
+      famousQuotesIyashi,
+      famousQuotesMental,
     }
   },
 
@@ -169,6 +181,139 @@ export default {
       this.e6 = 3;
       this.$store.commit("setLoading", true)
       this.result = true;
+      var randNum = Math.floor(Math.random()*(5-1)+1);
+
+      var rating = this.rating-1;
+      console.log(rating);
+
+      var famousType = this.type;
+
+      switch( famousType ){
+        case 1:
+          switch( randNum ){
+            case 1:
+              this.famousQuotesResult = this.famousQuotesShuzo[rating].famous_1;
+              console.log(this.famousQuotesShuzo[rating].famous_1);
+              break;
+            case 2:
+              this.famousQuotesResult = this.famousQuotesShuzo[rating].famous_2;
+              console.log(this.famousQuotesShuzo[rating].famous_2);
+              break;
+            case 3:
+              this.famousQuotesResult = this.famousQuotesShuzo[rating].famous_3;
+              console.log(this.famousQuotesShuzo[rating].famous_3);
+              break;
+            case 4:
+              this.famousQuotesResult = this.famousQuotesShuzo[rating].famous_4;
+              console.log(this.famousQuotesShuzo[rating].famous_4);
+              break;
+            case 5:
+              this.famousQuotesResult = this.famousQuotesShuzo[rating].famous_5;
+              console.log(this.famousQuotesShuzo[rating].famous_5);
+              break;
+            }
+          break;
+
+      case 2:
+        switch( randNum ){
+          case 1:
+            this.famousQuotesResult = this.famousQuotesIzin[rating].famous_1;
+            console.log(this.famousQuotesIzin[rating].famous_1);
+            break;
+          case 2:
+            this.famousQuotesResult = this.famousQuotesIzin[rating].famous_2;
+            console.log(this.famousQuotesIzin[rating].famous_2);
+            break;
+          case 3:
+            this.famousQuotesResult = this.famousQuotesIzin[rating].famous_3;
+            console.log(this.famousQuotesIzin[rating].famous_3);
+            break;
+          case 4:
+            this.famousQuotesResult = this.famousQuotesIzin[rating].famous_4;
+            console.log(this.famousQuotesIzin[rating].famous_4);
+            break;
+          case 5:
+            this.famousQuotesResult = this.famousQuotesIzin[rating].famous_5;
+            console.log(this.famousQuotesIzin[rating].famous_5);
+            break;
+          }
+        break;
+
+      case 3:
+        switch( randNum ){
+          case 1:
+            this.famousQuotesResult = this.famousQuotesYuru[rating].famous_1;
+            console.log(this.famousQuotesYuru[rating].famous_1);
+            break;
+          case 2:
+            this.famousQuotesResult = this.famousQuotesYuru[rating].famous_2;
+            console.log(this.famousQuotesYuru[rating].famous_2);
+            break;
+          case 3:
+            this.famousQuotesResult = this.famousQuotesYuru[rating].famous_3;
+            console.log(this.famousQuotesYuru[rating].famous_3);
+            break;
+          case 4:
+            this.famousQuotesResult = this.famousQuotesYuru[rating].famous_4;
+            console.log(this.famousQuotesYuru[rating].famous_4);
+            break;
+          case 5:
+            this.famousQuotesResult = this.famousQuotesYuru[rating].famous_5;
+            console.log(this.famousQuotesYuru[rating].famous_5);
+            break;
+          }
+        break;
+
+      case 4:
+        switch( randNum ){
+          case 1:
+            this.famousQuotesResult = this.famousQuotesIyashi[rating].famous_1;
+            console.log(this.famousQuotesIyashi[rating].famous_1);
+            break;
+          case 2:
+            this.famousQuotesResult = this.famousQuotesIyashi[rating].famous_2;
+            console.log(this.famousQuotesIyashi[rating].famous_2);
+            break;
+          case 3:
+            this.famousQuotesResult = this.famousQuotesIyashi[rating].famous_3;
+            console.log(this.famousQuotesIyashi[rating].famous_3);
+            break;
+          case 4:
+            this.famousQuotesResult = this.famousQuotesIyashi[rating].famous_4;
+            console.log(this.famousQuotesIyashi[rating].famous_4);
+            break;
+          case 5:
+            this.famousQuotesResult = this.famousQuotesIyashi[rating].famous_5;
+            console.log(this.famousQuotesIyashi[rating].famous_5);
+            break;
+          }
+        break;
+
+      case 5:
+        switch( randNum ){
+          case 1:
+            this.famousQuotesResult = this.famousQuotesMental[rating].famous_1;
+            console.log(this.famousQuotesMental[rating].famous_1);
+            break;
+          case 2:
+            this.famousQuotesResult = this.famousQuotesMental[rating].famous_2;
+            console.log(this.famousQuotesMental[rating].famous_2);
+            break;
+          case 3:
+            this.famousQuotesResult = this.famousQuotesMental[rating].famous_3;
+            console.log(this.famousQuotesMental[rating].famous_3);
+            break;
+          case 4:
+            this.famousQuotesResult = this.famousQuotesMental[rating].famous_4;
+            console.log(this.famousQuotesMental[rating].famous_4);
+            break;
+          case 5:
+            this.famousQuotesResult = this.famousQuotesMental[rating].famous_5;
+            console.log(this.famousQuotesMental[rating].famous_5);
+            break;
+          }
+        break;
+      }//
 
       //ローディングうまくいかぬ
       console.log('ウェイティングなう')
@@ -253,7 +398,8 @@ export default {
       this.isActiveType04 = false;
       this.isActiveType05 = false;
       this.type = 0;
-      this.rating = 0;this.isActiveType01 = false;
+      this.rating = 0;
+      this.isActiveType01 = false;
       this.isActiveType02 = false;
       this.isActiveType03 = false;
       this.isActiveType04 = false;
