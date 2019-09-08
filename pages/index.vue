@@ -67,12 +67,21 @@
           v-btn(rounded @click="retry") もう一度
           v-btn.ml-5(rounded @click="imagegDownload") 画像をDL  
           
+    v-layout.my-3.pb-3(justify-center)
+      v-btn(
+        text
+        @click="testJSON"
+        ) JSONテスト
+      ul(v-if="displayJSON")
+        li(v-for="(famousQuotes, index) in famousQuotesShuzo" v-bind:key="famaousQuotes.motivation_level") LEVEL：{{famousQuotes.motivation_level}}名言1：{{famousQuotes.famous_1}}名言2：{{famousQuotes.famous_2}}名言3：{{famousQuotes.famous_3}}名言4：{{famousQuotes.famous_4}}名言5：{{famousQuotes.famous_5}}
+          
 </template>
 
 <script>
 import firebase from '@/plugins/firebase'
 import store from '~/store/index.js'
 import { mapActions, mapState, mapGetters } from 'vuex'
+import famousQuotesShuzo from '~/static/famous_quotes_shuzo.json'
 
 export default {
 
@@ -88,12 +97,21 @@ export default {
       title: 'トップ',
       e6: 1,
       result: false,
+      displayJSON: false,
+      famaousQuotes: '',
+      motivation_level: '',
     };
   },
 
   asyncData(context) {
     return {
       resultWaiting: false,
+    }
+  },
+  
+  asyncData ({ params }) {
+    return {
+      famousQuotesShuzo
     }
   },
   
@@ -109,6 +127,7 @@ export default {
   },
 
   created: function(){
+    
   },
 
   mounted: function () {
@@ -129,6 +148,21 @@ export default {
       this.$store.commit("setLoading", false)
       console.log('ウェイティングおわり')
       console.log(this.$store.state.loading)
+    },
+    
+    // getJSON(){
+    //   this.$axios.$get('../static/famous_quotes_shuzo.json').then(function(response){
+    //     //完了したらfamaousQuotesに代入
+    //     this.famous_quotes_shuzo = response.data
+    //   }.bind(this)).catch(function(e){
+    //     console.error(e)
+    //   })
+    // },
+    
+    testJSON(){
+      this.displayJSON = true;
+      console.log('テストJSONなう')
+      console.log(this.famousQuotesShuzo);
     },
     
     twitterShare(){
