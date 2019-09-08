@@ -18,33 +18,50 @@
               )
           v-layout.my-3.pb-3(justify-center)
             v-btn.white--text.font-weight-bold(
+              v-if="rating == 0"
+              color="teal lighten-2"
+              rounded
+              outlined
+              disabled= true
+              ) こんな気分！
+            v-btn.white--text.font-weight-bold(
+              v-else
               color="teal lighten-2"
               @click="e6 = 2"
               rounded
               outlined
               ) こんな気分！
-          
+
       v-stepper.pb-6(v-model="e6" vertical)
         v-stepper-step.py-2(:complete="e6 > 2" step="2") どれが好み？
         v-stepper-content.py-0.mx-0.px-0(step="2")
           v-layout.mx-0.my-2.py-4.px-0(row wrap justify-space-around)
-            .fuwafuwa_1.btn-circle しゅうぞう
-            .fuwafuwa_2.btn-circle いじん
-            .fuwafuwa_3.btn-circle ゆるゆる
-            .fuwafuwa_4.btn-circle いやし
-            .fuwafuwa_5.btn-circle めんたる
+            .fuwafuwa_1.btn-circle(@click="shuzoClick" v-bind:class='{shuzoClass:isActiveType01}') しゅうぞう
+            .fuwafuwa_2.btn-circle(@click="izinClick" v-bind:class='{izinClass:isActiveType02}') いじん
+            .fuwafuwa_3.btn-circle(@click="yuruClick" v-bind:class='{yuruClass:isActiveType03}') ゆるゆる
+            .fuwafuwa_4.btn-circle(@click="iyashiClick" v-bind:class='{iyashiClass:isActiveType04}') いやし
+            .fuwafuwa_5.btn-circle(@click="mentalClick" v-bind:class='{mentalClass:isActiveType05}') めんたる
           v-layout.my-3.pb-3(justify-center)
             v-btn(
               text
-              @click="e6 = 1"
+              @click="backStep1"
               ) もどる
             v-btn.white--text.font-weight-bold(
+              v-if="type==0"
+              color="teal lighten-2"
+              outlined
+              rounded
+              disabled = true
+              ) やる気スイッチON！
+            v-btn.white--text.font-weight-bold(
+              v-else
               color="teal lighten-2"
               @click="motivationSwitch()"
               outlined
               rounded
+              disabled = false
               ) やる気スイッチON！
-              
+
     v-container(v-if="result")
       v-container(v-show="$store.state.loading")
         v-progress-linear(
@@ -53,10 +70,13 @@
           height="6"
           )
         p.caption あなたにピッタリな名言を検索中
-      
+
       v-container
         v-layout.py-2(justify-center)
           .famous-quotes-result ここに結果が入ります
+        v-container
+          p {{famousQuotesShuzo[0].motivation_level}}
+          p {{famousQuotesShuzo[0].famous_1}}
         v-layout.py-2(justify-center)
           v-btn.white--text.font-weight-bold(
             @click="twitterShare"
@@ -65,8 +85,8 @@
             rounded) Twitterにシェア
         v-layout.py-2(justify-center)
           v-btn(rounded @click="retry") もう一度
-          v-btn.ml-5(rounded @click="imagegDownload") 画像をDL  
-          
+          v-btn.ml-5(rounded @click="imagegDownload") 画像をDL
+
     v-layout.my-3.pb-3(justify-center)
       v-btn(
         text
@@ -74,7 +94,7 @@
         ) JSONテスト
       ul(v-if="displayJSON")
         li(v-for="(famousQuotes, index) in famousQuotesShuzo" v-bind:key="famaousQuotes.motivation_level") LEVEL：{{famousQuotes.motivation_level}}名言1：{{famousQuotes.famous_1}}名言2：{{famousQuotes.famous_2}}名言3：{{famousQuotes.famous_3}}名言4：{{famousQuotes.famous_4}}名言5：{{famousQuotes.famous_5}}
-          
+
 </template>
 
 <script>
@@ -100,6 +120,14 @@ export default {
       displayJSON: false,
       famaousQuotes: '',
       motivation_level: '',
+      rating: 0,
+      type:0,
+      isPushType : false,
+      isActiveType01 : false,
+      isActiveType02 : false,
+      isActiveType03 : false,
+      isActiveType04 : false,
+      isActiveType05 : false,
     };
   },
 
@@ -108,15 +136,15 @@ export default {
       resultWaiting: false,
     }
   },
-  
+
   asyncData ({ params }) {
     return {
       famousQuotesShuzo
     }
   },
-  
+
   watch: {
-    
+
   },
 
   components: {
@@ -127,7 +155,7 @@ export default {
   },
 
   created: function(){
-    
+
   },
 
   mounted: function () {
@@ -136,12 +164,12 @@ export default {
 
   methods: {
     ...mapActions(['setLoading']),
-    
+
     motivationSwitch(){
       this.e6 = 3;
       this.$store.commit("setLoading", true)
       this.result = true;
-      
+
       //ローディングうまくいかぬ
       console.log('ウェイティングなう')
       console.log(this.$store.state.loading)
@@ -149,35 +177,94 @@ export default {
       console.log('ウェイティングおわり')
       console.log(this.$store.state.loading)
     },
-    
-    // getJSON(){
-    //   this.$axios.$get('../static/famous_quotes_shuzo.json').then(function(response){
-    //     //完了したらfamaousQuotesに代入
-    //     this.famous_quotes_shuzo = response.data
-    //   }.bind(this)).catch(function(e){
-    //     console.error(e)
-    //   })
-    // },
-    
+
+    shuzoClick(){
+      this.type = (this.type != 1) ? 1 : 0 ;
+
+      this.isActiveType01 = !this.isActiveType01;
+      this.isActiveType02 = false;
+      this.isActiveType03 = false;
+      this.isActiveType04 = false;
+      this.isActiveType05 = false;
+    },
+
+    izinClick(){
+      this.type = (this.type != 2) ? 2 : 0 ;
+      this.isActiveType02 = !this.isActiveType02;
+      this.isActiveType01 = false;
+      this.isActiveType03 = false;
+      this.isActiveType04 = false;
+      this.isActiveType05 = false;
+    },
+
+    yuruClick(){
+      this.type = (this.type != 3) ? 3 : 0 ;
+      this.isActiveType03 = !this.isActiveType03;
+      this.isActiveType01 = false;
+      this.isActiveType02 = false;
+      this.isActiveType04 = false;
+      this.isActiveType05 = false;
+    },
+
+    iyashiClick(){
+      this.type = (this.type != 4) ? 4 : 0 ;
+      this.isActiveType04 = !this.isActiveType04;
+      this.isActiveType01 = false;
+      this.isActiveType02 = false;
+      this.isActiveType03 = false;
+      this.isActiveType05 = false;
+    },
+
+    mentalClick(){
+      this.type = (this.type != 5) ? 5 : 0 ;
+      this.isActiveType05 = !this.isActiveType05;
+      this.isActiveType01 = false;
+      this.isActiveType02 = false;
+      this.isActiveType03 = false;
+      this.isActiveType04 = false;
+    },
+
+    backStep1(){
+      this.e6 = 1;
+      this.isActiveType01 = false;
+      this.isActiveType02 = false;
+      this.isActiveType03 = false;
+      this.isActiveType04 = false;
+      this.isActiveType05 = false;
+      this.type = 0;
+    },
+
     testJSON(){
       this.displayJSON = true;
       console.log('テストJSONなう')
       console.log(this.famousQuotesShuzo);
     },
-    
+
     twitterShare(){
-      
+
     },
-    
+
     retry(){
       this.e6= 1;
       this.result = false;
+      this.isActiveType01 = false;
+      this.isActiveType02 = false;
+      this.isActiveType03 = false;
+      this.isActiveType04 = false;
+      this.isActiveType05 = false;
+      this.type = 0;
+      this.rating = 0;this.isActiveType01 = false;
+      this.isActiveType02 = false;
+      this.isActiveType03 = false;
+      this.isActiveType04 = false;
+      this.isActiveType05 = false;
+      this.type = 0;
     },
-    
+
     imagegDownload(){
-      
+
     },
-    
+
     sleep(a){
       var dt1 = new Date().getTime();
       var dt2 = new Date().getTime();
@@ -186,7 +273,7 @@ export default {
       }
       return;
     }
-    
+
   }
 }
 </script>
@@ -240,8 +327,18 @@ export default {
   transition: .4s;
 }
 
+.btn-circle.shuzoClass,
+.btn-circle.izinClass,
+.btn-circle.iyashiClass,
+.btn-circle.yuruClass,
+.btn-circle.mentalClass {
+  background-image: none;
+  background-color: #709dff;
+}
+
 .btn-circle:hover {
   cursor: pointer;
+  opacity: 0.8;
 }
 
 .rating-section{
@@ -267,6 +364,8 @@ export default {
   top:7px;
   right:20%;
 }
+
+
 
 @keyframes fuwafuwa_1 {
   0% { transform:translateX(0px); }
@@ -304,22 +403,22 @@ export default {
     height: 42vw;
     line-height: 42vw;
   }
-  
+
   .btn-circle{
     width: 100px;
     height: 100px;
     line-height: 100px;
     font-size: 14px;
   }
-  
+
   .rating-wrapper::before{
     left:30px;
   }
-  
+
   .rating-wrapper::after{
     right: 30px;
   }
-  
+
 }
 
 @media screen and (max-width: 348px) {
@@ -330,5 +429,5 @@ export default {
     font-size: 12px;
   }
 }
-  
+
 </style>
