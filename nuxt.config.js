@@ -44,6 +44,9 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
   ],
+
+  axios: {
+  },
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
