@@ -73,12 +73,10 @@
 
       v-container
         v-layout.py-2(justify-center)
-          .famous-quotes-result ここに結果が入ります
-        v-container
-          .sample_result
-            p {{rating}}
-            p {{famousQuotesResult}}
-        v-layout.py-2(justify-center)
+          //.famous-quotes-result {{famousQuotesResult}}
+          .famous-quotes-result-wrapper
+            .famous-quotes-result-content あなたにピッタリな名言を検索中あなたにピッタリな名言を検索中、あなたにピッタリな名言を検索中あなたにピッタリな名言を検索中あなたにピッタリな名言を検索中。　松岡修造
+        v-layout.mt-4.py-2(justify-center)
           v-btn.white--text.font-weight-bold(
             @click="twitterShare"
             large
@@ -426,14 +424,26 @@ export default {
 
 <style>
 
-.famous-quotes-result{
-  background-color: #999999;
+.famous-quotes-result-wrapper{
+  display: flex;
+  align-items: center;
   text-align: center;
-  line-height: 315px;
-  color: #fff;
   font-weight: bold;
   width: 600px;
-  height: 315px
+  height: 315px;
+  word-break: normal;
+  padding: 20px 30px;
+  background-image: url("../assets/concrete.png");
+  background-size:cover;
+}
+
+.famous-quotes-result-content{
+  flex: 1;
+  font-size: 1.2rem;
+  line-height: 2.5rem;
+  letter-spacing: 0.2rem;
+  color: #black;
+  text-shadow: 1px 1px 2px silver;
 }
 
 .fuwafuwa_1 {
@@ -565,6 +575,26 @@ export default {
     right: 30px;
   }
 
+  .famous-quotes-result-wrapper{
+    width: 90vw;
+    height: 47.3vw;
+  }
+
+  .famous-quotes-result-content{
+    font-size: 1.0rem;
+    line-height: 2.0rem;
+    letter-spacing: 0.2rem;
+  }
+
+}
+
+@media screen and (max-width: 480px) {
+
+  .famous-quotes-result-content{
+    font-size: 0.7rem;
+    line-height: 1.4rem;
+    letter-spacing: 0.15rem;
+  }
 }
 
 @media screen and (max-width: 348px) {
@@ -573,6 +603,12 @@ export default {
     height: 75px;
     line-height: 75px;
     font-size: 12px;
+  }
+
+  .famous-quotes-result-content{
+    font-size: 0.6rem;
+    line-height: 1.2rem;
+    letter-spacing: 0.1rem;
   }
 }
 
