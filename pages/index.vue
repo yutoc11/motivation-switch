@@ -72,19 +72,25 @@
         p.caption あなたにピッタリな名言を検索中
 
       v-container
-        v-layout.py-2(justify-center)
-          //.famous-quotes-result {{famousQuotesResult}}
-          .famous-quotes-result-wrapper
-            .famous-quotes-result-content あなたにピッタリな名言を検索中あなたにピッタリな名言を検索中、あなたにピッタリな名言を検索中あなたにピッタリな名言を検索中あなたにピッタリな名言を検索中。　松岡修造
+        v-layout.py-2(
+          justify-center
+          )
+          .famous-quotes-result-wrapper(id="result_to_image")
+            .famous-quotes-result-content {{famousQuotesResult}}
         v-layout.mt-4.py-2(justify-center)
           v-btn.white--text.font-weight-bold(
             @click="twitterShare"
             large
             color="#00acee"
-            rounded) Twitterにシェア
+            rounded
+            ) Twitterにシェア
         v-layout.py-2(justify-center)
           v-btn(rounded @click="retry") もう一度
           v-btn.ml-5(rounded @click="imagegDownload") 画像をDL
+
+
+        v-layout
+          img(id="output_image")
 
     //-v-layout.my-3.pb-3(justify-center)
       v-btn(
@@ -105,6 +111,7 @@ import famousQuotesIzin from '~/static/famous_quotes_izin.json'
 import famousQuotesYuru from '~/static/famous_quotes_yuru.json'
 import famousQuotesIyashi from '~/static/famous_quotes_iyashi.json'
 import famousQuotesMental from '~/static/famous_quotes_mental.json'
+import html2canvas from 'html2canvas'
 
 export default {
 
@@ -134,6 +141,7 @@ export default {
       famous_quotes : '',
       famousQuotesResult: '',
       famousQuotesList : '',
+      output: null,
     };
   },
 
@@ -169,7 +177,7 @@ export default {
   },
 
   mounted: function () {
-
+    //this.capturecanvas()
   },
 
   methods: {
@@ -416,9 +424,17 @@ export default {
         dt2 = new Date().getTime();
       }
       return;
+    },
+
+    capturecanvas() {
+      html2canvas(document.getElementById("result_to_image")).then(function(canvas){
+        document.getElementById("output_image").appendChild;
+      })
     }
 
+
   }
+
 }
 </script>
 
@@ -427,6 +443,7 @@ export default {
 .famous-quotes-result-wrapper{
   display: flex;
   align-items: center;
+  border-radius: 10px;
   text-align: center;
   font-weight: bold;
   width: 600px;
@@ -435,6 +452,8 @@ export default {
   padding: 20px 30px;
   background-image: url("../assets/concrete.png");
   background-size:cover;
+  z-index: 1000;
+  border: solid 4px #4271C9;
 }
 
 .famous-quotes-result-content{
