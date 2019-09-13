@@ -89,8 +89,26 @@
           v-btn.ml-5(rounded @click="imagegDownload") 画像をDL
 
 
-        v-layout
-          img(id="output_image")
+
+    v-container
+      v-btn.white--text.font-weight-bold(
+        @click="html2canvasTest"
+        large
+        color="#00acee"
+        rounded
+        ) HTML2CANVASのテストで画像生成
+      v-container.output_image_wrapper
+        .html2canvas_test(id="output_image")
+      a(
+        href=""
+        id="ss"
+        download="html_ss.png"
+        )
+        v-btn.white--text.font-weight-bold(
+          large
+          rounded
+          color="#00acee"
+          ) スクリーンショットをダウンロード
 
     //-v-layout.my-3.pb-3(justify-center)
       v-btn(
@@ -426,13 +444,16 @@ export default {
       return;
     },
 
-    capturecanvas() {
-      html2canvas(document.getElementById("result_to_image")).then(function(canvas){
-        document.getElementById("output_image").appendChild;
+    html2canvasTest() {
+
+      html2canvas(document.querySelector("#result_to_image")).then(function(canvas){
+        var result = document.querySelector("#output_image");
+				result.innerHTML = '';
+				result.appendChild(canvas)
+        var imgData = canvas.toDataURL();
+        document.getElementById("ss").href = imgData;
       })
     }
-
-
   }
 
 }
@@ -443,7 +464,6 @@ export default {
 .famous-quotes-result-wrapper{
   display: flex;
   align-items: center;
-  border-radius: 10px;
   text-align: center;
   font-weight: bold;
   width: 600px;
@@ -451,6 +471,7 @@ export default {
   word-break: normal;
   padding: 20px 30px;
   background-image: url("../assets/concrete.png");
+  background-color: transparent;
   background-size:cover;
   z-index: 1000;
   border: solid 4px #4271C9;
@@ -540,7 +561,9 @@ export default {
   right:20%;
 }
 
-
+#ss{
+  text-decoration: none;
+}
 
 @keyframes fuwafuwa_1 {
   0% { transform:translateX(0px); }
