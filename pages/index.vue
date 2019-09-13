@@ -147,6 +147,7 @@ export default {
       famousQuotesResult: '',
       famousQuotesList : '',
       output: null,
+      imageData: "",
     };
   },
 
@@ -195,7 +196,19 @@ export default {
   				result.appendChild(canvas)
           var imgData = canvas.toDataURL();
           document.getElementById("ss").href = imgData;
+          this.imageData = imgData;
         })
+    },
+
+    ogpCreate(){
+      var storageRef = firebase.storage().ref();
+      var createRef = storageRef.child('test.jpg');
+
+      // 作成
+      //image = canvas.toDataURL('image/jpeg').split(',')[1]
+      createRef.putString(this.imageData, 'base64').then((snapshot) =>{
+        console.log('Uploaded a blob or file!');
+      })
     },
 
     motivationSwitch(){
@@ -346,7 +359,8 @@ export default {
       this.$nextTick(() => {
         this.html2canvasCreate();
         console.log('canvasできた？')
-        console.log(this.resultFilename)
+        this.ogpCreate();
+        console.log('OGP保存できたのかな？')
       });
     },
 
