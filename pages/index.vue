@@ -84,31 +84,18 @@
             color="#00acee"
             rounded
             ) Twitterにシェア
-        v-layout.py-2(justify-center)
-          v-btn(rounded @click="retry") もう一度
-          v-btn.ml-5(rounded @click="imagegDownload") 画像をDL
+        v-layout.py-2.px-10(justify-space-around)
+          v-btn(small rounded @click="retry") もう一度
+          a(
+            href=""
+            id="ss"
+            download="モチベーションをあげる名言.png"
+            )
+            v-btn(small rounded) 画像をDL
 
+    v-container.output_image_wrapper
+      .html2canvas_test(id="output_image")
 
-
-    v-container
-      v-btn.white--text.font-weight-bold(
-        @click="html2canvasTest"
-        large
-        color="#00acee"
-        rounded
-        ) HTML2CANVASのテストで画像生成
-      v-container.output_image_wrapper
-        .html2canvas_test(id="output_image")
-      a(
-        href=""
-        id="ss"
-        download="html_ss.png"
-        )
-        v-btn.white--text.font-weight-bold(
-          large
-          rounded
-          color="#00acee"
-          ) スクリーンショットをダウンロード
 
     //-v-layout.my-3.pb-3(justify-center)
       v-btn(
@@ -200,6 +187,16 @@ export default {
 
   methods: {
     ...mapActions(['setLoading']),
+
+    html2canvasCreate() {
+        html2canvas(document.querySelector("#result_to_image")).then(function(canvas){
+          var result = document.querySelector("#output_image");
+  				result.innerHTML = '';
+  				result.appendChild(canvas)
+          var imgData = canvas.toDataURL();
+          document.getElementById("ss").href = imgData;
+        })
+    },
 
     motivationSwitch(){
       this.e6 = 3;
@@ -337,7 +334,7 @@ export default {
             break;
           }
         break;
-      }//
+      }
 
       //ローディングうまくいかぬ
       console.log('ウェイティングなう')
@@ -345,6 +342,12 @@ export default {
       this.$store.commit("setLoading", false)
       console.log('ウェイティングおわり')
       console.log(this.$store.state.loading)
+
+      this.$nextTick(() => {
+        this.html2canvasCreate();
+        console.log('canvasできた？')
+        console.log(this.resultFilename)
+      });
     },
 
     shuzoClick(){
@@ -443,17 +446,6 @@ export default {
       }
       return;
     },
-
-    html2canvasTest() {
-
-      html2canvas(document.querySelector("#result_to_image")).then(function(canvas){
-        var result = document.querySelector("#output_image");
-				result.innerHTML = '';
-				result.appendChild(canvas)
-        var imgData = canvas.toDataURL();
-        document.getElementById("ss").href = imgData;
-      })
-    }
   }
 
 }
@@ -563,6 +555,10 @@ export default {
 
 #ss{
   text-decoration: none;
+}
+
+.output_image_wrapper{
+  display:none;
 }
 
 @keyframes fuwafuwa_1 {
