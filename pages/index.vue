@@ -72,21 +72,43 @@
         p.caption あなたにピッタリな名言を検索中
 
       v-container
-        v-layout.py-2(justify-center)
-          .famous-quotes-result ここに結果が入ります
-        v-container
-          .sample_result
-            p {{rating}}
-            p {{famousQuotesResult}}
-        v-layout.py-2(justify-center)
+        v-layout.py-2(
+          justify-center
+          )
+          .famous-quotes-result-wrapper(id="result_to_image")
+            .famous-quotes-result-content {{famousQuotesResult}}
+        v-layout.mt-4.py-2(justify-center)
           v-btn.white--text.font-weight-bold(
             @click="twitterShare"
             large
             color="#00acee"
-            rounded) Twitterにシェア
+            rounded
+            ) Twitterにシェア
         v-layout.py-2(justify-center)
           v-btn(rounded @click="retry") もう一度
           v-btn.ml-5(rounded @click="imagegDownload") 画像をDL
+
+
+
+    v-container
+      v-btn.white--text.font-weight-bold(
+        @click="html2canvasTest"
+        large
+        color="#00acee"
+        rounded
+        ) HTML2CANVASのテストで画像生成
+      v-container.output_image_wrapper
+        .html2canvas_test(id="output_image")
+      a(
+        href=""
+        id="ss"
+        download="html_ss.png"
+        )
+        v-btn.white--text.font-weight-bold(
+          large
+          rounded
+          color="#00acee"
+          ) スクリーンショットをダウンロード
 
     //-v-layout.my-3.pb-3(justify-center)
       v-btn(
@@ -107,6 +129,7 @@ import famousQuotesIzin from '~/static/famous_quotes_izin.json'
 import famousQuotesYuru from '~/static/famous_quotes_yuru.json'
 import famousQuotesIyashi from '~/static/famous_quotes_iyashi.json'
 import famousQuotesMental from '~/static/famous_quotes_mental.json'
+import html2canvas from 'html2canvas'
 
 export default {
 
@@ -136,6 +159,7 @@ export default {
       famous_quotes : '',
       famousQuotesResult: '',
       famousQuotesList : '',
+      output: null,
     };
   },
 
@@ -171,7 +195,7 @@ export default {
   },
 
   mounted: function () {
-
+    //this.capturecanvas()
   },
 
   methods: {
@@ -418,22 +442,48 @@ export default {
         dt2 = new Date().getTime();
       }
       return;
-    }
+    },
 
+    html2canvasTest() {
+
+      html2canvas(document.querySelector("#result_to_image")).then(function(canvas){
+        var result = document.querySelector("#output_image");
+				result.innerHTML = '';
+				result.appendChild(canvas)
+        var imgData = canvas.toDataURL();
+        document.getElementById("ss").href = imgData;
+      })
+    }
   }
+
 }
 </script>
 
 <style>
 
-.famous-quotes-result{
-  background-color: #999999;
+.famous-quotes-result-wrapper{
+  display: flex;
+  align-items: center;
   text-align: center;
-  line-height: 315px;
-  color: #fff;
   font-weight: bold;
   width: 600px;
-  height: 315px
+  height: 315px;
+  word-break: normal;
+  padding: 20px 30px;
+  background-image: url("../assets/concrete.png");
+  background-color: transparent;
+  background-size:cover;
+  z-index: 1000;
+  border: solid 4px #4271C9;
+}
+
+.famous-quotes-result-content{
+  flex: 1;
+  font-size: 1.2rem;
+  line-height: 2.5rem;
+  letter-spacing: 0.2rem;
+  color: #black;
+  text-shadow: 1px 1px 2px silver;
 }
 
 .fuwafuwa_1 {
@@ -511,7 +561,9 @@ export default {
   right:20%;
 }
 
-
+#ss{
+  text-decoration: none;
+}
 
 @keyframes fuwafuwa_1 {
   0% { transform:translateX(0px); }
@@ -565,6 +617,26 @@ export default {
     right: 30px;
   }
 
+  .famous-quotes-result-wrapper{
+    width: 90vw;
+    height: 47.3vw;
+  }
+
+  .famous-quotes-result-content{
+    font-size: 1.0rem;
+    line-height: 2.0rem;
+    letter-spacing: 0.2rem;
+  }
+
+}
+
+@media screen and (max-width: 480px) {
+
+  .famous-quotes-result-content{
+    font-size: 0.7rem;
+    line-height: 1.4rem;
+    letter-spacing: 0.15rem;
+  }
 }
 
 @media screen and (max-width: 348px) {
@@ -573,6 +645,12 @@ export default {
     height: 75px;
     line-height: 75px;
     font-size: 12px;
+  }
+
+  .famous-quotes-result-content{
+    font-size: 0.6rem;
+    line-height: 1.2rem;
+    letter-spacing: 0.1rem;
   }
 }
 

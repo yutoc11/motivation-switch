@@ -49,6 +49,25 @@ header{
   max-height: 50px;
 }
 
+body,
+main,
+.v-content__wrap{
+  background-image: url("../assets/background.jpg");
+  background-repeat : repeat;
+}
+
+.v-content__wrap::before{
+  /* 透過した黒を上から重ねるイメージ */
+  /* background-color: rgba(255,255,255,0.4); */
+  /* 自由に位置指定 */
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: ' ';
+}
+
 .header-link{
   text-decoration: none;
 }
