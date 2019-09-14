@@ -117,6 +117,7 @@ import famousQuotesYuru from '~/static/famous_quotes_yuru.json'
 import famousQuotesIyashi from '~/static/famous_quotes_iyashi.json'
 import famousQuotesMental from '~/static/famous_quotes_mental.json'
 import html2canvas from 'html2canvas'
+import uuid from 'uuid'
 
 export default {
 
@@ -148,6 +149,7 @@ export default {
       famousQuotesList : '',
       output: null,
       imageData: "",
+      uuid: '', // 適当に採番する
     };
   },
 
@@ -176,6 +178,8 @@ export default {
 
   computed: {
     ...mapState(['loading']),
+
+
   },
 
   created: function(){
@@ -186,30 +190,46 @@ export default {
     //this.capturecanvas()
   },
 
+  updated: function(){
+    if(this.result){
+      console.log('this.resultがtrueとキャッチ！')
+      console.log(this.imageData)
+      if(document.getElementById("ss").href != 'http://localhost:3000/'){
+        this.imageData = document.getElementById("ss").href;
+        console.log('↓this.imageData拾えたかな？↓')
+        console.log(this.imageData)
+      }
+    }
+  },
+
   methods: {
     ...mapActions(['setLoading']),
 
     html2canvasCreate() {
+
         html2canvas(document.querySelector("#result_to_image")).then(function(canvas){
           var result = document.querySelector("#output_image");
   				result.innerHTML = '';
   				result.appendChild(canvas)
-          var imgData = canvas.toDataURL();
+          var imgData = '';
+          imgData = canvas.toDataURL();
           document.getElementById("ss").href = imgData;
-          this.imageData = imgData;
+          console.log('document.getElementById("ss").href');
+          console.log(imgData);
         })
     },
 
-    ogpCreate(){
-      var storageRef = firebase.storage().ref();
-      var createRef = storageRef.child('test.jpg');
+    //動いてない
+      ogpCreate(){
+        var storageRef = firebase.storage().ref();
+        var createRef = storageRef.child('test.jpg');
 
-      // 作成
-      //image = canvas.toDataURL('image/jpeg').split(',')[1]
-      createRef.putString(this.imageData, 'base64').then((snapshot) =>{
-        console.log('Uploaded a blob or file!');
-      })
-    },
+        // 作成
+        //image = canvas.toDataURL('image/jpeg').split(',')[1]
+        createRef.putString(this.imageData, 'base64').then((snapshot) =>{
+          console.log('Uploaded a blob or file!');
+        })
+      },
 
     motivationSwitch(){
       this.e6 = 3;
@@ -359,9 +379,30 @@ export default {
       this.$nextTick(() => {
         this.html2canvasCreate();
         console.log('canvasできた？')
-        this.ogpCreate();
-        console.log('OGP保存できたのかな？')
+        //this.ogpCreate();
+        //console.log('OGP保存できたのかな？')
       });
+    },
+
+    fileUploadTest() {
+      const imgData = this.imageData;
+      console.log(imgData)
+      if (imgData) {
+        const fileName = uuid()
+        console.log('ファイルネームは？')
+        console.log(fileName)
+        const uploadImage = this.$store.dispatch('persona/uploadImage', {
+          name: fileName,
+          file: imgData,
+        })
+      }
+    },
+
+    twitterShare(){
+      this.imageData = document.getElementById("ss").href;
+      console.log('↓this.imageData拾えたかな？↓')
+      console.log(this.imageData)
+      this.fileUploadTest()
     },
 
     shuzoClick(){
@@ -424,10 +465,6 @@ export default {
       this.displayJSON = true;
       console.log('テストJSONなう')
       console.log(this.famousQuotesShuzo);
-    },
-
-    twitterShare(){
-
     },
 
     retry(){
