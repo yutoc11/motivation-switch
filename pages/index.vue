@@ -191,15 +191,6 @@ export default {
   },
 
   updated: function(){
-    if(this.result){
-      console.log('this.resultがtrueとキャッチ！')
-      console.log(this.imageData)
-      if(document.getElementById("ss").href != 'http://localhost:3000/'){
-        this.imageData = document.getElementById("ss").href;
-        console.log('↓this.imageData拾えたかな？↓')
-        console.log(this.imageData)
-      }
-    }
   },
 
   methods: {
@@ -218,18 +209,6 @@ export default {
           console.log(imgData);
         })
     },
-
-    //動いてない
-      ogpCreate(){
-        var storageRef = firebase.storage().ref();
-        var createRef = storageRef.child('test.jpg');
-
-        // 作成
-        //image = canvas.toDataURL('image/jpeg').split(',')[1]
-        createRef.putString(this.imageData, 'base64').then((snapshot) =>{
-          console.log('Uploaded a blob or file!');
-        })
-      },
 
     motivationSwitch(){
       this.e6 = 3;
@@ -384,7 +363,7 @@ export default {
       });
     },
 
-    fileUploadTest() {
+    fileUpload() {
       const imgData = this.imageData;
       console.log(imgData)
       if (imgData) {
@@ -402,7 +381,7 @@ export default {
       this.imageData = document.getElementById("ss").href;
       console.log('↓this.imageData拾えたかな？↓')
       console.log(this.imageData)
-      this.fileUploadTest()
+      this.fileUpload()
     },
 
     shuzoClick(){
