@@ -15,7 +15,7 @@ admin.initializeApp({
 // admin.initializeApp(functions.config().firebase)
 
 //ストレージにアクセス
-let bucket = admin.storage().bucket();
+let bucket = admin.storage().bucket()
 const db = admin.firestore()
 
 let projectId = 'motivation-switch'
@@ -33,7 +33,7 @@ async function generateSignedUrl (bucketName, filename) {
 
   // Get a signed URL for the file
   const [url] = await storage.bucket(bucketName).file(filename).getSignedUrl(options)
-  console.log(`The signed url for ${filename} is ${url}.`)
+  console.log('The signed url for ${filename} is ${url}.')
   // [END storage_generate_signed_url]
   return url
 }
@@ -49,7 +49,7 @@ const tw_description = '名言がモチベーションを上げてくれるサ�
 const tw_site = ''
 const tw_creator = ''
 
-const genHtml = (url) => `
+const genHtml = (url) => '
 <!DOCTYPE html>
 <html>
   <head>
@@ -80,17 +80,17 @@ const genHtml = (url) => `
     </script>
   </body>
 </html>
-`
+'
 
 app.get('/:id', async (req, res) => {
   const doc = await db.collection('cards').doc(req.params.id).get()
   console.log('sファンクションが動いた')
   console.log(req.params.id)
   if (!doc.exists) {
-    console.log(`${req.params.id} not exist`)
+    console.log('${req.params.id} not exist')
     res.status(404).send('404 Not Exist')
   } else {
-    const url = await generateSignedUrl(bucketName, `${req.params.id}.png`)
+    const url = await generateSignedUrl(bucketName, '${req.params.id}.png)
     const html = genHtml(url)
     res.set('cache-control', 'public, max-age=3600');
     res.send(html)
