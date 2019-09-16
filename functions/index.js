@@ -83,10 +83,9 @@ const genHtml = (url) => `<!DOCTYPE html>
     <meta name="twitter:creator" content=${tw_creator}>
   </head>
   <body>
-    ${'BONG '.repeat(3)}
     <script>
-      // クローラーにはメタタグを解釈させて、人間は任意のページに飛ばす
-      //location.href = '/';
+      //クローラーにはメタタグを解釈させて、人間は任意のページに飛ばす
+      location.href = '/';
     </script>
   </body>
 </html>`
