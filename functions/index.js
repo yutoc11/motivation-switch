@@ -107,6 +107,7 @@ const genHtml = (url) => `
 
 app.get('/:id', async (req, res) => {
   const doc = await db.collection('cards').doc(req.params.id).get()
+  console.log(req.params.id)
   if (!doc.exists) {
     console.log(`${req.params.id} not exist`)
     res.status(404).send('404 Not Exist')
