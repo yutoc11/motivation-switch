@@ -29,21 +29,13 @@ projectId = 'motivation-switch'
 // OGPが保存されてるCloudStorageのバケット
 bucketName = 'motivation-switch.appspot.com'
 
-async function generateSignedUrl (bucketName, filename) {
-  // [START storage_generate_signed_url]
-  // Imports the Google Cloud client library
-  // const { Storage } = require('@google-cloud/storage')
 
-  // Creates a client
-  // const storage = new Storage({
-  //   projectId,
-  //   keyFilename
-  // })
+// URLを生成
+async function generateSignedUrl (bucketName, filename) {
 
   const {Storage} = require('@google-cloud/storage');
   const storage = new Storage();
   const myBucket = storage.bucket(bucketName);
-  const file = myBucket.file('test.png');
 
   const options = {
     action: 'read',
