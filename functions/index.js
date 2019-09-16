@@ -7,7 +7,8 @@ var serviceAccount = require("./motivation-switch-firebase-adminsdk-xq1qk-40c433
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://motivation-switch.firebaseio.com"
+  databaseURL: "https://motivation-switch.firebaseio.com",
+  storageBucket: "motivation-switch.appspot.com"
 });
 
 // 参考にしたQiitaはこう
