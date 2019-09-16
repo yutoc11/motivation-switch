@@ -8,7 +8,7 @@
     ],
     "rewrites": [
       {
-        "source": "/bigben", "function": "bigben"
+        "source": "/s/**", "function": "s"
       },
       {
         "source": "**",

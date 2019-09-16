@@ -11,9 +11,11 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@google-cloud/storage": "^3.2.1",
     "@nuxtjs/pwa": "^3.0.0-0",
     "core-js": "^3.2.1",
     "firebase": "^6.5.0",
+    "firebase-admin": "^8.5.0",
     "html2canvas": "^1.0.0-rc.3",
     "nuxt": "^2.0.0",
     "vue-html2canvas": "0.0.4"

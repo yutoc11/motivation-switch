@@ -8,7 +8,7 @@ const basePath = baseUrl + baseDir
 // meta
 const lang = 'ja'
 const siteName = 'モチベーションスイッチ'
-const siteDesc = 'あなたのモチベーションの高さや気分に合わせて、偉人の名言を届けてくれるサービスです。'
+const siteDesc = '気分や好みに合わせた名言が届いて、モチベーションを上げてくれるサービスです。'
 //const siteKeywords = '１つ目,２つ目,３つ目,４つ目'
 
 // images
