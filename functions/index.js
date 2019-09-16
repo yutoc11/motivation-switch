@@ -15,39 +15,24 @@ admin.initializeApp({
 // admin.initializeApp(functions.config().firebase)
 
 //ストレージにアクセス
-var bucket = admin.storage().bucket();
+let bucket = admin.storage().bucket();
 const db = admin.firestore()
 
-let projectId, bucketName
-// 上記から一旦消した
-// let keyFilename
+let projectId = 'motivation-switch'
+let bucketName = 'motivation-switch.appspot.com'
 
-// Firebaseのproject ID
-projectId = 'motivation-switch'
-// keyFilename = 'privateKey.json'
-
-// OGPが保存されてるCloudStorageのバケット
-bucketName = 'motivation-switch.appspot.com'
-
-
-// URLを生成
+// URLを生成する関数
 async function generateSignedUrl (bucketName, filename) {
 
   const {Storage} = require('@google-cloud/storage');
   const storage = new Storage();
-  const myBucket = storage.bucket(bucketName);
-
   const options = {
     action: 'read',
     expires: Date.now() + 1000 * 60 * 60 * 24 * 30 // 1month
   }
 
   // Get a signed URL for the file
-  const [url] = await storage
-    .bucket(bucketName)
-    .file(filename)
-    .getSignedUrl(options)
-
+  const [url] = await storage.bucket(bucketName).file(filename).getSignedUrl(options)
   console.log(`The signed url for ${filename} is ${url}.`)
   // [END storage_generate_signed_url]
   return url
@@ -99,6 +84,7 @@ const genHtml = (url) => `
 
 app.get('/:id', async (req, res) => {
   const doc = await db.collection('cards').doc(req.params.id).get()
+  console.log('sファンクションが動いた')
   console.log(req.params.id)
   if (!doc.exists) {
     console.log(`${req.params.id} not exist`)
