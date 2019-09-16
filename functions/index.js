@@ -20,20 +20,31 @@ const db = admin.firestore()
 
 let projectId = 'motivation-switch'
 let bucketName = 'motivation-switch.appspot.com'
+let keyFilename = './motivation-switch-firebase-adminsdk-xq1qk-40c433b787.json'
 
 // URLを生成する関数
 async function generateSignedUrl (bucketName, filename) {
 
+  console.log('generateSignedUrlなう')
   const {Storage} = require('@google-cloud/storage');
-  const storage = new Storage();
+  console.log('@google-cloud/storageできたよ')
+  const storage = new Storage({projectId,keyFilename});
+  console.log('strageNewできたよ')
+  console.log(storage)
   const options = {
     action: 'read',
     expires: Date.now() + 1000 * 60 * 60 * 24 * 30 // 1month
   }
+  console.log(options)
 
   // Get a signed URL for the file
+  console.log(bucketName)
+  console.log(filename)
+  console.log(options)
   const [url] = await storage.bucket(bucketName).file(filename).getSignedUrl(options)
-  console.log('The signed url for ${filename} is ${url}.')
+  console.log('urlの先まで行ったよ')
+  console.log(url)
+  console.log(`The signed url for ${filename} is ${url}.`)
   // [END storage_generate_signed_url]
   return url
 }
@@ -49,7 +60,7 @@ const tw_description = '名言がモチベーションを上げてくれるサ�
 const tw_site = ''
 const tw_creator = ''
 
-const genHtml = (url) => '<!DOCTYPE html>
+const genHtml = (url) => `<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -78,20 +89,33 @@ const genHtml = (url) => '<!DOCTYPE html>
       //location.href = '/';
     </script>
   </body>
-</html>'
+</html>`
 
 app.get('/:id', async (req, res) => {
   const doc = await db.collection('cards').doc(req.params.id).get()
-  console.log('sファンクションが動いた')
-  console.log(req.params.id)
+  // console.log('doc')
+  // console.log(doc)
+  // console.log('req.params.id')
+  // console.log(req.params.id)
   if (!doc.exists) {
-    console.log('${req.params.id} not exist')
+    console.log('ないよ！')
+    console.log(`${req.params.id} not exist`)
     res.status(404).send('404 Not Exist')
   } else {
-    const url = await generateSignedUrl(bucketName, '${req.params.id}.png')
+    console.log('あったよ！')
+    console.log(`images/${req.params.id}.png`)
+    const url = await generateSignedUrl(bucketName, `images/${req.params.id}.png`)
+    console.log(url)
     const html = genHtml(url)
     res.set('cache-control', 'public, max-age=3600');
     res.send(html)
   }
 })
 exports.s = functions.https.onRequest(app)
+
+exports.makeUppercase = functions.database.ref('/messages/{pushId}/original').onCreate(event => {
+  const original = event.data.val()
+  console.log('Uppercasing', event.params.pushId, original)
+  const uppercase = original.toUpperCase()
+  return event.data.ref.parent.child('uppercase').set(uppercase)
+})
