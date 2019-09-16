@@ -49,8 +49,7 @@ const tw_description = '名言がモチベーションを上げてくれるサ�
 const tw_site = ''
 const tw_creator = ''
 
-const genHtml = (url) => '
-<!DOCTYPE html>
+const genHtml = (url) => '<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -79,8 +78,7 @@ const genHtml = (url) => '
       //location.href = '/';
     </script>
   </body>
-</html>
-'
+</html>'
 
 app.get('/:id', async (req, res) => {
   const doc = await db.collection('cards').doc(req.params.id).get()
@@ -90,7 +88,7 @@ app.get('/:id', async (req, res) => {
     console.log('${req.params.id} not exist')
     res.status(404).send('404 Not Exist')
   } else {
-    const url = await generateSignedUrl(bucketName, '${req.params.id}.png)
+    const url = await generateSignedUrl(bucketName, '${req.params.id}.png')
     const html = genHtml(url)
     res.set('cache-control', 'public, max-age=3600');
     res.send(html)
