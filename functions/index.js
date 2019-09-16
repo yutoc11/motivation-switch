@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const admin = require('firebase-admin')
 
-var serviceAccount = require("path/to/serviceAccountKey.json")
+var serviceAccount = require("./motivation-switch-firebase-adminsdk-xq1qk-40c433b787.json")
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
