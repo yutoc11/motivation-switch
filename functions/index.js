@@ -2,6 +2,7 @@ const functions = require('firebase-functions')
 const express = require('express')
 const app = express()
 const admin = require('firebase-admin')
+const cors = require('cors')({origin: true});
 
 var serviceAccount = require("./motivation-switch-firebase-adminsdk-xq1qk-40c433b787.json")
 
@@ -91,30 +92,26 @@ const genHtml = (url) => `<!DOCTYPE html>
 </html>`
 
 app.get('/:id', async (req, res) => {
-  const doc = await db.collection('cards').doc(req.params.id).get()
-  // console.log('doc')
-  // console.log(doc)
-  // console.log('req.params.id')
-  // console.log(req.params.id)
-  if (!doc.exists) {
-    console.log('ないよ！')
-    console.log(`${req.params.id} not exist`)
-    res.status(404).send('404 Not Exist')
-  } else {
-    console.log('あったよ！')
-    console.log(`images/${req.params.id}.png`)
-    const url = await generateSignedUrl(bucketName, `images/${req.params.id}.png`)
-    console.log(url)
-    const html = genHtml(url)
-    res.set('cache-control', 'public, max-age=3600');
-    res.send(html)
-  }
+
+  cors(request, response, () => {
+    const doc = await db.collection('cards').doc(req.params.id).get()
+    // console.log('doc')
+    // console.log(doc)
+    // console.log('req.params.id')
+    // console.log(req.params.id)
+    if (!doc.exists) {
+      console.log('ないよ！')
+      console.log(`${req.params.id} not exist`)
+      res.status(404).send('404 Not Exist')
+    } else {
+      console.log('あったよ！')
+      console.log(`images/${req.params.id}.png`)
+      const url = await generateSignedUrl(bucketName, `images/${req.params.id}.png`)
+      console.log(url)
+      const html = genHtml(url)
+      res.set('cache-control', 'public, max-age=3600');
+      res.send(html)
+    }
+  });
 })
 exports.s = functions.https.onRequest(app)
-
-exports.makeUppercase = functions.database.ref('/messages/{pushId}/original').onCreate(event => {
-  const original = event.data.val()
-  console.log('Uppercasing', event.params.pushId, original)
-  const uppercase = original.toUpperCase()
-  return event.data.ref.parent.child('uppercase').set(uppercase)
-})
