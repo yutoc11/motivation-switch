@@ -93,7 +93,7 @@ const genHtml = (url) => `<!DOCTYPE html>
 
 app.get('/:id', async (req, res) => {
 
-  cors(request, response, () => {
+  cors(req, res, async() => {
     const doc = await db.collection('cards').doc(req.params.id).get()
     // console.log('doc')
     // console.log(doc)
