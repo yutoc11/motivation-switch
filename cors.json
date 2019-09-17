@@ -1,6 +1,6 @@
 [{
   "origin": ["https://motivation-switch.firebaseapp.com", "http://localhost:3000"],
-  "responseHeader": ["*"],
-  "method": ["GET"],
-  "maxAgeSeconds": 86400
+  "responseHeader": ["Content-Type"],
+  "method": ["GET", "HEAD", "DELETE"],
+  "maxAgeSeconds": 3600
 }]
