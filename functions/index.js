@@ -94,6 +94,11 @@ const genHtml = (url) => `<!DOCTYPE html>
 app.get('/:id', async (req, res) => {
 
   cors(req, res, async() => {
+    response.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+    response.set('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS, POST');
+    response.set('Access-Control-Allow-Headers', 'Content-Type, authorization');
+
+    response.json({ data: items });
     const doc = await db.collection('cards').doc(req.params.id).get()
     // console.log('doc')
     // console.log(doc)
