@@ -4,6 +4,7 @@ const webpack = require('webpack')
 const baseUrl = process.env.BASE_URL || 'http://localhost:3000'
 const baseDir = process.env.BASE_DIR || '/'
 const basePath = baseUrl + baseDir
+const isDev = process.env.NODE_ENV !== 'production'
 
 // meta
 const lang = 'ja'
@@ -73,6 +74,15 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+
+  render: {
+        csp: {
+            enabled: !isDev,
+            policies: {
+                'default-src': ['*'],
+            }
+        }
+    },
   /*
   ** Customize the progress-bar color
   */

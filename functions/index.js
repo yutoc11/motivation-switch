@@ -2,7 +2,7 @@ const functions = require('firebase-functions')
 const express = require('express')
 const app = express()
 const admin = require('firebase-admin')
-const cors = require('cors')({origin: true});
+// const cors = require('cors')({origin: true});
 
 var serviceAccount = require("./motivation-switch-firebase-adminsdk-xq1qk-40c433b787.json")
 
@@ -66,6 +66,7 @@ const genHtml = (url) => `<!DOCTYPE html>
   <head>
     <meta charset="utf-8">
     <title>${title}</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src '*'/">
     <meta name="description" content=${meta_description}>
     <meta property="og:locale" content="ja_JP">
     <meta property="og:type" content="website">
@@ -84,21 +85,22 @@ const genHtml = (url) => `<!DOCTYPE html>
     <meta name="twitter:creator" content=${tw_creator}>
   </head>
   <body>
+  テスト
     <script>
       //クローラーにはメタタグを解釈させて、人間は任意のページに飛ばす
-      location.href = '/';
+      // location.href = '/';
     </script>
   </body>
 </html>`
 
 app.get('/:id', async (req, res) => {
 
-  cors(req, res, async() => {
-    response.set('Access-Control-Allow-Origin', 'http://localhost:3000');
-    response.set('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS, POST');
-    response.set('Access-Control-Allow-Headers', 'Content-Type, authorization');
+  // cors(req, res, async() => {
+    // res.set('Access-Control-Allow-Origin', '*');
+    // res.set('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS, POST');
+    // res.set('Access-Control-Allow-Headers', 'Content-Type');
 
-    response.json({ data: items });
+    // res.json({ data: items });
     const doc = await db.collection('cards').doc(req.params.id).get()
     // console.log('doc')
     // console.log(doc)
@@ -117,6 +119,6 @@ app.get('/:id', async (req, res) => {
       res.set('cache-control', 'public, max-age=3600');
       res.send(html)
     }
-  });
+  // });
 })
 exports.s = functions.https.onRequest(app)
