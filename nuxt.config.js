@@ -75,14 +75,14 @@ export default {
     ]
   },
 
-  render: {
-        csp: {
-            enabled: !isDev,
-            policies: {
-                'default-src': ['*'],
-            }
-        }
-    },
+  // render: {
+  //       csp: {
+  //           enabled: !isDev,
+  //           policies: {
+  //               'default-src': ['*'],
+  //           }
+  //       }
+  //   },
   /*
   ** Customize the progress-bar color
   */

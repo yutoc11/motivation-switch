@@ -66,7 +66,6 @@ const genHtml = (url) => `<!DOCTYPE html>
   <head>
     <meta charset="utf-8">
     <title>${title}</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src '*'/">
     <meta name="description" content=${meta_description}>
     <meta property="og:locale" content="ja_JP">
     <meta property="og:type" content="website">

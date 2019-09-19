@@ -17,17 +17,6 @@
         ]
       }
     ],
-    "headers": [
-      {
-        "source" : "**",
-        "headers" : [
-          {
-            "key":"Content-Security-Policy",
-            "value":"default-src '*"
-          }
-        ]
-      }
-    ],
     "rewrites": [
       {
         "source": "/s/**", "function": "s"
