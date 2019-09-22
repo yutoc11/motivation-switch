@@ -15,7 +15,7 @@ const siteDesc = '気分や好みに合わせた名言が届いて、モチベ�
 // images
 const iconImages = baseDir + 'img/icons/'
 // このURLはnuxt.configにはダメらしい
-const ogpImage = baseDir + 'ogp.png'
+const ogpImage = basePath + 'ogp.png'
 
 // pwa
 const shortName = 'モチベスイッチ'
