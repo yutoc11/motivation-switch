@@ -382,6 +382,10 @@ export default {
       console.log('↓this.imageData拾えたかな？↓')
       console.log(this.imageData)
       this.fileUpload()
+      const url = 'https://motivation-switch.firebaseapp.com/'
+      const hashtags = '名言,偉人,松岡修造'
+      const desc = 'この名言でモチベUP！→ '+this.famousQuotesResult.slice(0,100)+'…'
+      open(`https://twitter.com/intent/tweet?text=${desc}&url=${url}&hashtags=${hashtags}`, "_blank" ) ;
     },
 
     shuzoClick(){

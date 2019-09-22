@@ -15,7 +15,7 @@ const siteDesc = '気分や好みに合わせた名言が届いて、モチベ�
 // images
 const iconImages = baseDir + 'img/icons/'
 // このURLはnuxt.configにはダメらしい
-// const ogpImage = 'https://firebasestorage.googleapis.com/v0/b/motivation-switch.appspot.com/o/test.png?alt=media&token=e4a0e1ce-92f4-4463-b94b-8580808f01b7`
+const ogpImage = baseDir + 'ogp.png'
 
 // pwa
 const shortName = 'モチベスイッチ'
@@ -44,7 +44,7 @@ export default {
 
       // ogp関連
       { hid: 'og:title', property: 'og:title', content: siteName },
-      // { hid: 'og:image', property: 'og:image', content: ogpImage },
+      { hid: 'og:image', property: 'og:image', content: ogpImage },
       { hid: 'og:description', property: 'og:description', content: siteDesc },
       { hid: 'og:url', property: 'og:url', content: basePath },
       { hid: 'og:type', property: 'og:type', content: 'website' },
@@ -52,7 +52,7 @@ export default {
       { name: 'twitter:site', content: '@Twitter' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: siteName },
-      // { name: 'twitter:image', content: ogpImage },
+      { name: 'twitter:image', content: ogpImage },
       { name: 'twitter:description', content: siteDesc },
       // { property: 'article:publisher', content: 'FacebookURL' },
       // { property: 'fb:app_id', content: 'FacebookAppID' },
