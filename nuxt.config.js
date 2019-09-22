@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 
 // path
-const baseUrl = process.env.BASE_URL || 'http://localhost:3000'
+const baseUrl = process.env.BASE_URL || 'https://motivation-switch.firebaseapp.com/'
 const baseDir = process.env.BASE_DIR || '/'
 const basePath = baseUrl + baseDir
 const isDev = process.env.NODE_ENV !== 'production'
