@@ -124,6 +124,12 @@ export default {
   ** Build configuration
   */
   build: {
+
+    terser: {
+      terserOptions: {
+        compress: { drop_console: true }
+      },
+    },
     /*
     ** You can extend webpack config here
     */
