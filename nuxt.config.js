@@ -1,3 +1,32 @@
+const webpack = require('webpack')
+
+// path
+const baseUrl = process.env.BASE_URL || 'http://localhost:3000'
+const baseDir = process.env.BASE_DIR || '/'
+const basePath = baseUrl + baseDir
+const isDev = process.env.NODE_ENV !== 'production'
+
+// meta
+const lang = 'ja'
+const siteName = 'モチベーションスイッチ'
+const siteDesc = '気分や好みに合わせた名言が届いて、モチベーションを上げてくれるサービスです。'
+//const siteKeywords = '１つ目,２つ目,３つ目,４つ目'
+
+// images
+const iconImages = baseDir + 'img/icons/'
+// このURLはnuxt.configにはダメらしい
+// const ogpImage = 'https://firebasestorage.googleapis.com/v0/b/motivation-switch.appspot.com/o/test.png?alt=media&token=e4a0e1ce-92f4-4463-b94b-8580808f01b7`
+
+// pwa
+const shortName = 'モチベスイッチ'
+const manifestIcon = 'img/icons/icon-1024.png'
+const splashscreens = baseDir + 'img/splashscreens/'
+
+// etc
+// const apiUrl = process.env.API_URL || 'https://example.com'
+// const colorPrimary = '#0A428C'
+// const colorSecondary = '#FA4988'
+
 import colors from 'vuetify/es5/util/colors'
 
 export default {
@@ -11,12 +40,49 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
+
+      // ogp関連
+      { hid: 'og:title', property: 'og:title', content: siteName },
+      // { hid: 'og:image', property: 'og:image', content: ogpImage },
+      { hid: 'og:description', property: 'og:description', content: siteDesc },
+      { hid: 'og:url', property: 'og:url', content: basePath },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      { hid: 'og:site_name', property: 'og:site_name', content: siteName },
+      { name: 'twitter:site', content: '@Twitter' },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: siteName },
+      // { name: 'twitter:image', content: ogpImage },
+      { name: 'twitter:description', content: siteDesc },
+      // { property: 'article:publisher', content: 'FacebookURL' },
+      // { property: 'fb:app_id', content: 'FacebookAppID' },
+
+      // 参考にしたサイトの設定方法
+      //<meta property="og:title" content="${TITLE}">
+      // <meta property="og:image" content="${IMAGE}">
+      // <meta property="og:description" content="${DESCRIPTION}">
+      // <meta property="og:url" content="${SITEURL}">
+      // <meta property="og:type" content="website">
+      // <meta property="og:site_name" content="${TITLE}">
+      // <meta name="twitter:site" content="">
+      // <meta name="twitter:card" content="summary_large_image">
+      // <meta name="twitter:title" content="${TITLE}">
+      // <meta name="twitter:image" content="${IMAGE}">
+      // <meta name="twitter:description" content="${DESCRIPTION}">
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+
+  // render: {
+  //       csp: {
+  //           enabled: !isDev,
+  //           policies: {
+  //               'default-src': ['*'],
+  //           }
+  //       }
+  //   },
   /*
   ** Customize the progress-bar color
   */
