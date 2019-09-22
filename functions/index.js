@@ -21,7 +21,7 @@ const db = admin.firestore()
 
 let projectId = 'motivation-switch'
 let bucketName = 'motivation-switch.appspot.com'
-let keyFilename = './motivation-switch-firebase-adminsdk-xq1qk-40c433b787.json'
+let keyFilename = 'motivation-switch-firebase-adminsdk-xq1qk-40c433b787.json'
 
 // URLを生成する関数
 async function generateSignedUrl (bucketName, filename) {
@@ -87,7 +87,7 @@ const genHtml = (url) => `<!DOCTYPE html>
   テスト
     <script>
       //クローラーにはメタタグを解釈させて、人間は任意のページに飛ばす
-      // location.href = '/';
+      //location.href = '/';
     </script>
   </body>
 </html>`
@@ -111,8 +111,8 @@ app.get('/:id', async (req, res) => {
       res.status(404).send('404 Not Exist')
     } else {
       console.log('あったよ！')
-      console.log(`images/${req.params.id}.png`)
-      const url = await generateSignedUrl(bucketName, `images/${req.params.id}.png`)
+      console.log(`${req.params.id}.png`)
+      const url = await generateSignedUrl(bucketName, `${req.params.id}.png`)
       console.log(url)
       const html = genHtml(url)
       res.set('cache-control', 'public, max-age=3600');
