@@ -38,7 +38,7 @@
           v-layout.mx-0.my-2.py-4.px-0(row wrap justify-space-around)
             .fuwafuwa_1.btn-circle(@click="shuzoClick" v-bind:class='{shuzoClass:isActiveType01}') しゅうぞう
             .fuwafuwa_2.btn-circle(@click="izinClick" v-bind:class='{izinClass:isActiveType02}') いじん
-            .fuwafuwa_3.btn-circle(@click="yuruClick" v-bind:class='{yuruClass:isActiveType03}') ゆるゆる
+            .fuwafuwa_3.btn-circle(@click="yuruClick" v-bind:class='{yuruClass:isActiveType03}') さとり
             .fuwafuwa_4.btn-circle(@click="iyashiClick" v-bind:class='{iyashiClass:isActiveType04}') いやし
             .fuwafuwa_5.btn-circle(@click="mentalClick" v-bind:class='{mentalClass:isActiveType05}') めんたる
           v-layout.my-3.pb-3(justify-center)
@@ -89,14 +89,14 @@
           a(
             href=""
             id="ss"
-            download="モチベーションをあげる名言.png"
+            download="モチベーションUP名言.png"
             )
             v-btn(small rounded) 画像をDL
 
     v-container.output_image_wrapper
       .html2canvas_test(id="output_image")
 
-
+    //-一覧表示する時用に記述を残す
     //-v-layout.my-3.pb-3(justify-center)
       v-btn(
         text
@@ -148,8 +148,8 @@ export default {
       famousQuotesResult: '',
       famousQuotesList : '',
       output: null,
-      imageData: "",
-      uuid: '', // 適当に採番する
+      imageData: '',
+      uuid: '',
     };
   },
 
@@ -169,28 +169,8 @@ export default {
     }
   },
 
-  watch: {
-
-  },
-
-  components: {
-  },
-
   computed: {
     ...mapState(['loading']),
-
-
-  },
-
-  created: function(){
-
-  },
-
-  mounted: function () {
-    //this.capturecanvas()
-  },
-
-  updated: function(){
   },
 
   methods: {
@@ -222,6 +202,7 @@ export default {
       var famousType = this.type;
 
       switch( famousType ){
+
         case 1:
           switch( randNum ){
             case 1:
@@ -348,7 +329,7 @@ export default {
         break;
       }
 
-      //ローディングうまくいかぬ
+      //-ローディングうまくいかぬ
       console.log('ウェイティングなう')
       console.log(this.$store.state.loading)
       this.$store.commit("setLoading", false)
@@ -358,8 +339,6 @@ export default {
       this.$nextTick(() => {
         this.html2canvasCreate();
         console.log('canvasできた？')
-        //this.ogpCreate();
-        //console.log('OGP保存できたのかな？')
       });
     },
 
@@ -384,7 +363,7 @@ export default {
       this.fileUpload()
       const url = 'https://motivation-switch.firebaseapp.com/'
       const hashtags = '名言,偉人,松岡修造'
-      const desc = 'この名言でモチベUP！→ '+this.famousQuotesResult.slice(0,100)+'…'
+      const desc = 'こんな名言でモチベUPしよう！→ '+this.famousQuotesResult.slice(0,200)+'…'
       open(`https://twitter.com/intent/tweet?text=${desc}&url=${url}&hashtags=${hashtags}`, "_blank" ) ;
     },
 
@@ -460,16 +439,6 @@ export default {
       this.isActiveType05 = false;
       this.type = 0;
       this.rating = 0;
-      this.isActiveType01 = false;
-      this.isActiveType02 = false;
-      this.isActiveType03 = false;
-      this.isActiveType04 = false;
-      this.isActiveType05 = false;
-      this.type = 0;
-    },
-
-    imagegDownload(){
-
     },
 
     sleep(a){
