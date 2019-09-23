@@ -2,7 +2,6 @@ const functions = require('firebase-functions')
 const express = require('express')
 const app = express()
 const admin = require('firebase-admin')
-// const cors = require('cors')({origin: true});
 
 var serviceAccount = require("./motivation-switch-firebase-adminsdk-xq1qk-40c433b787.json")
 
@@ -11,9 +10,6 @@ admin.initializeApp({
   databaseURL: "https://motivation-switch.firebaseio.com",
   storageBucket: "motivation-switch.appspot.com"
 });
-
-// 参考にしたQiitaはこう
-// admin.initializeApp(functions.config().firebase)
 
 //ストレージにアクセス
 let bucket = admin.storage().bucket()
@@ -94,17 +90,8 @@ const genHtml = (url) => `<!DOCTYPE html>
 
 app.get('/:id', async (req, res) => {
 
-  // cors(req, res, async() => {
-    // res.set('Access-Control-Allow-Origin', '*');
-    // res.set('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS, POST');
-    // res.set('Access-Control-Allow-Headers', 'Content-Type');
-
-    // res.json({ data: items });
     const doc = await db.collection('cards').doc(req.params.id).get()
-    // console.log('doc')
-    // console.log(doc)
-    // console.log('req.params.id')
-    // console.log(req.params.id)
+
     if (!doc.exists) {
       console.log('ないよ！')
       console.log(`${req.params.id} not exist`)
@@ -118,6 +105,6 @@ app.get('/:id', async (req, res) => {
       res.set('cache-control', 'public, max-age=3600');
       res.send(html)
     }
-  // });
 })
+
 exports.s = functions.https.onRequest(app)

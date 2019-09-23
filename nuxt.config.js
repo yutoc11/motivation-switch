@@ -4,7 +4,6 @@ const webpack = require('webpack')
 const baseUrl = process.env.BASE_URL || 'https://motivation-switch.firebaseapp.com'
 const baseDir = process.env.BASE_DIR || '/'
 const basePath = baseUrl + baseDir
-const isDev = process.env.NODE_ENV !== 'production'
 
 // meta
 const lang = 'ja'
@@ -14,7 +13,6 @@ const siteDesc = '気分や好みに合わせた名言が届いて、モチベ�
 
 // images
 const iconImages = baseDir + 'img/icons/'
-// このURLはnuxt.configにはダメらしい
 const ogpImage = basePath + 'ogp.png'
 
 // pwa
@@ -56,33 +54,11 @@ export default {
       { name: 'twitter:description', content: siteDesc },
       // { property: 'article:publisher', content: 'FacebookURL' },
       // { property: 'fb:app_id', content: 'FacebookAppID' },
-
-      // 参考にしたサイトの設定方法
-      //<meta property="og:title" content="${TITLE}">
-      // <meta property="og:image" content="${IMAGE}">
-      // <meta property="og:description" content="${DESCRIPTION}">
-      // <meta property="og:url" content="${SITEURL}">
-      // <meta property="og:type" content="website">
-      // <meta property="og:site_name" content="${TITLE}">
-      // <meta name="twitter:site" content="">
-      // <meta name="twitter:card" content="summary_large_image">
-      // <meta name="twitter:title" content="${TITLE}">
-      // <meta name="twitter:image" content="${IMAGE}">
-      // <meta name="twitter:description" content="${DESCRIPTION}">
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-
-  // render: {
-  //       csp: {
-  //           enabled: !isDev,
-  //           policies: {
-  //               'default-src': ['*'],
-  //           }
-  //       }
-  //   },
   /*
   ** Customize the progress-bar color
   */
@@ -130,27 +106,12 @@ export default {
         compress: { drop_console: true }
       },
     },
-    /*
-    ** You can extend webpack config here
-    */
-    // extend (config, ctx) {
-    //   /**
-    //    * vue-loader に オプションを渡す
-    //    */
-    //   const vueLoader = config.module.rules.find(rule => rule.loader === 'vue-loader');
-    //   const { options: {loaders} } = vueLoader || { options: {} }
-    //   if (loaders) {
-    //     for (const loader of Object.values(loaders)) {
-    //       changeLoaderOptions(Array.isArray(loader) ? loader : [loader])
-    //     }
-    //   }
-    //   config.module.rules.forEach(rule => changeLoaderOptions(rule.use))
-    // }
   }
 }
 
 // /**
 //  * loader の名前一致でオプションをセットする
+//  * うまくいかずコメントアウトしているが、いつか復活させたいところ
 //  */
 // function changeLoaderOptions(loaders) {
 //   if (loaders) {
